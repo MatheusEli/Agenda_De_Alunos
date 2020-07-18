@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lint>
+    <issue id="IconXmlAndPng">
+        <ignore path="src/main/res/drawable-hdpi/ic_action_novo_aluno.png" />
+        <ignore path="src/main/res/drawable-hdpi/ic_action_salvar_aluno.png" />
+        <ignore path="src/main/res/drawable-mdpi/ic_action_novo_aluno.png" />
+        <ignore path="src/main/res/drawable-mdpi/ic_action_salvar_aluno.png" />
+        <ignore path="src/main/res/drawable-xhdpi/ic_action_novo_aluno.png" />
+        <ignore path="src/main/res/drawable-xhdpi/ic_action_salvar_aluno.png" />
+        <ignore path="src/main/res/drawable-xxhdpi/ic_action_novo_aluno.png" />
+        <ignore path="src/main/res/drawable-xxhdpi/ic_action_salvar_aluno.png" />
+    </issue>
+</lint>

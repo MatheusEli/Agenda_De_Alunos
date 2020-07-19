@@ -4,13 +4,14 @@ import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
+import androidx.room.Update;
 
 import java.util.List;
 
 import br.com.alura.agenda.model.Aluno;
 
 @Dao
-public interface RoomAlunoDao {
+public interface AlunoDao {
 
     @Insert
     void salvar(Aluno aluno);
@@ -20,4 +21,7 @@ public interface RoomAlunoDao {
 
     @Delete
     void remover(Aluno aluno);
+
+    @Update
+    void editar(Aluno aluno);
 }

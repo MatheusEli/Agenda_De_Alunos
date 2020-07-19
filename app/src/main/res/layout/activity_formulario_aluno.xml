@@ -21,6 +21,15 @@
             tools:ignore="Autofill" />
 
         <EditText
+            android:id="@+id/activity_formulario_aluno_sobrenome"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:hint="@string/sobrenome"
+            android:inputType="textCapWords"
+            tools:ignore="Autofill" />
+
+        <EditText
             android:id="@+id/activity_formulario_aluno_telefone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

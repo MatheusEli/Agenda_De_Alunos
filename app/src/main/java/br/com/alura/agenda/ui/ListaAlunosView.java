@@ -8,10 +8,9 @@ import android.widget.ListView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
-import androidx.room.Room;
 
 import br.com.alura.agenda.database.AgendaDataBase;
-import br.com.alura.agenda.database.dao.RoomAlunoDao;
+import br.com.alura.agenda.database.dao.AlunoDao;
 import br.com.alura.agenda.model.Aluno;
 import br.com.alura.agenda.ui.adapter.ListaAlunosAdapter;
 
@@ -19,15 +18,12 @@ public class ListaAlunosView {
 
 
     private final Context context;
-    private final RoomAlunoDao dao;
+    private final AlunoDao dao;
     private final ListaAlunosAdapter adapter;
 
     public ListaAlunosView(Context context) {
         this.context = context;
-        dao = Room.databaseBuilder(context, AgendaDataBase.class, "agenda.db")
-                .allowMainThreadQueries()
-                .build()
-                .getRoomAlunoDao();
+        dao = AgendaDataBase.getInstance(context).getRoomAlunoDao();
         adapter = new ListaAlunosAdapter(context);
     }
 

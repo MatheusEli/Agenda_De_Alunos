@@ -10,7 +10,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import br.com.alura.agenda.R;
-import br.com.alura.agenda.dao.DAO;
+import br.com.alura.agenda.database.AgendaDataBase;
+import br.com.alura.agenda.database.dao.AlunoDao;
 import br.com.alura.agenda.model.Aluno;
 
 import static br.com.alura.agenda.ui.activity.ConstantesActivities.CHAVE_ALUNO;
@@ -22,13 +23,14 @@ public class FormularioAlunoActivity extends AppCompatActivity {
     private TextView campoNome;
     private TextView campoTelefone;
     private TextView campoEmail;
-    private final DAO dao = new DAO();
+    private AlunoDao dao;
     private Aluno aluno;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_formulario_aluno);
+        dao = AgendaDataBase.getInstance(this).getRoomAlunoDao();
         inicializacaoDosCampos();
         carregaAlunos();
     }

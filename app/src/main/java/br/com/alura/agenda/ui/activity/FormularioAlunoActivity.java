@@ -21,7 +21,8 @@ public class FormularioAlunoActivity extends AppCompatActivity {
     public static final String TITULO_APPBAR_NOVO_ALUNO = "Novo aluno";
     private static final String TITULO_APPBAR_EDITA_ALUNO = "Edita aluno";
     private TextView campoNome;
-    private TextView campoTelefone;
+    private TextView campoTelefoneFixo;
+    private TextView campoTelefoneCelular;
     private TextView campoEmail;
     private AlunoDao dao;
     private Aluno aluno;
@@ -50,13 +51,15 @@ public class FormularioAlunoActivity extends AppCompatActivity {
 
     private void preencheOsCampos() {
         campoNome.setText(aluno.getNome());
-        campoTelefone.setText(aluno.getTelefone());
+        campoTelefoneFixo.setText(aluno.getTelefoneFixo());
+        campoTelefoneCelular.setText(aluno.getTelefoneCelular());
         campoEmail.setText(aluno.getEmail());
     }
 
     private void inicializacaoDosCampos() {
         campoNome = findViewById(R.id.activity_formulario_aluno_nome);
-        campoTelefone = findViewById(R.id.activity_formulario_aluno_telefone);
+        campoTelefoneFixo = findViewById(R.id.activity_formulario_aluno_telefone_fixo);
+        campoTelefoneCelular = findViewById(R.id.activity_formulario_aluno_telefone_celular);
         campoEmail = findViewById(R.id.activity_formulario_aluno_email);
     }
 
@@ -89,7 +92,8 @@ public class FormularioAlunoActivity extends AppCompatActivity {
 
     private void preencheAluno() {
         aluno.setNome(campoNome.getText().toString());
-        aluno.setTelefone(campoTelefone.getText().toString());
+        aluno.setTelefoneFixo(campoTelefoneFixo.getText().toString());
+        aluno.setTelefoneCelular(campoTelefoneCelular.getText().toString());
         aluno.setEmail(campoEmail.getText().toString());
     }
 }

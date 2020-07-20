@@ -13,7 +13,7 @@ import br.com.alura.agenda.model.Aluno;
 
 import static br.com.alura.agenda.database.AgendaMigrations.TODAS_MIGRATIONS;
 
-@Database(entities = {Aluno.class}, version = 4, exportSchema = false)
+@Database(entities = {Aluno.class}, version = 5, exportSchema = false)
 @TypeConverters({ConversorCalendar.class})
 
 public abstract class AgendaDataBase extends RoomDatabase {

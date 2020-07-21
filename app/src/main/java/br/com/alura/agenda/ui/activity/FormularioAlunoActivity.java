@@ -51,15 +51,15 @@ public class FormularioAlunoActivity extends AppCompatActivity {
 
     private void preencheOsCampos() {
         campoNome.setText(aluno.getNome());
-        campoTelefoneFixo.setText(aluno.getTelefoneFixo());
-        campoTelefoneCelular.setText(aluno.getTelefoneCelular());
+//        campoTelefoneFixo.setText(aluno.getTelefoneFixo());
+//        campoTelefoneCelular.setText(aluno.getTelefoneCelular());
         campoEmail.setText(aluno.getEmail());
     }
 
     private void inicializacaoDosCampos() {
         campoNome = findViewById(R.id.activity_formulario_aluno_nome);
-        campoTelefoneFixo = findViewById(R.id.activity_formulario_aluno_telefone_fixo);
-        campoTelefoneCelular = findViewById(R.id.activity_formulario_aluno_telefone_celular);
+//        campoTelefoneFixo = findViewById(R.id.activity_formulario_aluno_telefone_fixo);
+//        campoTelefoneCelular = findViewById(R.id.activity_formulario_aluno_telefone_celular);
         campoEmail = findViewById(R.id.activity_formulario_aluno_email);
     }
 
@@ -92,8 +92,8 @@ public class FormularioAlunoActivity extends AppCompatActivity {
 
     private void preencheAluno() {
         aluno.setNome(campoNome.getText().toString());
-        aluno.setTelefoneFixo(campoTelefoneFixo.getText().toString());
-        aluno.setTelefoneCelular(campoTelefoneCelular.getText().toString());
+//        aluno.setTelefoneFixo(campoTelefoneFixo.getText().toString());
+//        aluno.setTelefoneCelular(campoTelefoneCelular.getText().toString());
         aluno.setEmail(campoEmail.getText().toString());
     }
 }

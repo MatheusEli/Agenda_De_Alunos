@@ -9,7 +9,7 @@ public class ConversorTipoTelefone {
     @TypeConverter
     public String paraString(TipoTelefone valor){
 
-        return valor.toString();
+        return valor.name();
     }
 
     @TypeConverter
@@ -19,6 +19,6 @@ public class ConversorTipoTelefone {
             return TipoTelefone.valueOf(valor);
         }
 
-        return TipoTelefone.valueOf("FIXO");
+        return TipoTelefone.FIXO;
     }
 }

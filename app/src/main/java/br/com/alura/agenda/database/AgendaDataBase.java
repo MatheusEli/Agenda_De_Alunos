@@ -10,6 +10,7 @@ import androidx.room.TypeConverters;
 import br.com.alura.agenda.database.converter.ConversorCalendar;
 import br.com.alura.agenda.database.converter.ConversorTipoTelefone;
 import br.com.alura.agenda.database.dao.AlunoDao;
+import br.com.alura.agenda.database.dao.TelefoneDAO;
 import br.com.alura.agenda.model.Aluno;
 import br.com.alura.agenda.model.Telefone;
 
@@ -28,4 +29,6 @@ public abstract class AgendaDataBase extends RoomDatabase {
                 .addMigrations(TODAS_MIGRATIONS)
                 .build();
     }
+
+    public abstract TelefoneDAO getTelefoneDAO();
 }

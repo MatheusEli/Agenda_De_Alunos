@@ -98,7 +98,7 @@ public class AgendaMigrations {
                     "`idAluno` INTEGER NOT NULL)");
 
             //Envio de telefones da tabela aluno para telefone;
-            database.execSQL("INSERT INTO Telefone(numero) SELECT telefoneFixo FROM Aluno");
+            database.execSQL("INSERT INTO Telefone(numero, idAluno) SELECT telefoneFixo, id FROM Aluno");
 
             //Atualização do tipo do telefone para fixo em todos;
             database.execSQL("UPDATE Telefone SET tipo = ?", new TipoTelefone[] {FIXO});

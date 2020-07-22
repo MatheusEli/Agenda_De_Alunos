@@ -17,6 +17,12 @@ public class Telefone {
     onUpdate = CASCADE, onDelete = CASCADE)
     private int idAluno;
 
+    public Telefone(String numero, TipoTelefone tipo) {
+        this.numero = numero;
+        this.tipo = tipo;
+        this.idAluno = idAluno;
+    }
+
     public int getId() {
         return id;
     }

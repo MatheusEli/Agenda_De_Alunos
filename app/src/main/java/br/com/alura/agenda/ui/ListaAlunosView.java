@@ -9,6 +9,7 @@ import android.widget.ListView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 
+import br.com.alura.agenda.asynctask.BuscaAlunoTask;
 import br.com.alura.agenda.database.AgendaDataBase;
 import br.com.alura.agenda.database.dao.AlunoDao;
 import br.com.alura.agenda.model.Aluno;
@@ -30,7 +31,7 @@ public class ListaAlunosView {
     @SuppressWarnings("unchecked")
     public void atualizaAlunos() {
 
-        adapter.atualiza(dao.todos());
+        new BuscaAlunoTask(dao, adapter).execute();
     }
 
     public void confirmaRemocao(@NonNull final MenuItem item) {

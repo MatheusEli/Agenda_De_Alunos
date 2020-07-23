@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 
 import br.com.alura.agenda.asynctask.BuscaAlunoTask;
+import br.com.alura.agenda.asynctask.RemoveAlunoTask;
 import br.com.alura.agenda.database.AgendaDataBase;
 import br.com.alura.agenda.database.dao.AlunoDao;
 import br.com.alura.agenda.model.Aluno;
@@ -50,8 +51,7 @@ public class ListaAlunosView {
     }
 
     private void remove(Aluno aluno) {
-        dao.remover(aluno);
-        adapter.remove(aluno);
+        new RemoveAlunoTask(dao, adapter, aluno);
     }
 
 

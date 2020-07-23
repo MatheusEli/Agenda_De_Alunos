@@ -2,10 +2,13 @@ package br.com.alura.agenda.asynctask;
 
 import android.os.AsyncTask;
 
+import java.util.List;
+
 import br.com.alura.agenda.database.dao.AlunoDao;
+import br.com.alura.agenda.model.Aluno;
 import br.com.alura.agenda.ui.adapter.ListaAlunosAdapter;
 
-public class BuscaAlunoTask extends AsyncTask {
+public class BuscaAlunoTask extends AsyncTask<Void,Void,List<Aluno>> {
 
 
     private final AlunoDao dao;
@@ -17,8 +20,14 @@ public class BuscaAlunoTask extends AsyncTask {
     }
 
     @Override
-    protected Object doInBackground(Object[] objects) {
-        adapter.atualiza(dao.todos());
-        return null;
+    protected List<Aluno> doInBackground(Void... voids) {
+        List<Aluno> todosAlunos = dao.todos();
+        return todosAlunos;
+    }
+
+    @Override
+    protected void onPostExecute(List<Aluno> alunos) {
+        super.onPostExecute(alunos);
+        adapter.atualiza(alunos);
     }
 }

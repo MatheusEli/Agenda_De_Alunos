@@ -7,17 +7,17 @@ import br.com.alura.agenda.database.dao.TelefoneDAO;
 import br.com.alura.agenda.model.Aluno;
 import br.com.alura.agenda.model.Telefone;
 
-public class SalvaAlunoTask extends AsyncTask {
+public class SalvaAlunoTask extends AsyncTask<Void, Void, Void> {
 
     private final Aluno aluno;
     private final AlunoDao dao;
     private final Telefone fixo;
     private final Telefone celular;
     private final TelefoneDAO telefoneDAO;
-    private final SalvaAlunoListener listener;
+    private final QuandoAlunoSalvoListener listener;
 
     public SalvaAlunoTask(Aluno aluno, AlunoDao dao, Telefone fixo, Telefone celular, TelefoneDAO telefoneDAO,
-                          SalvaAlunoListener listener) {
+                          QuandoAlunoSalvoListener listener) {
         this.aluno = aluno;
         this.dao = dao;
         this.fixo = fixo;
@@ -27,31 +27,27 @@ public class SalvaAlunoTask extends AsyncTask {
     }
 
     @Override
-    protected Object doInBackground(Object[] objects) {
-        int idAluno = dao.salvar(aluno).intValue();
-        vinculaAlunoComTelefone(idAluno, fixo, celular);
+    protected Void doInBackground(Void... voids) {
+        int alunoId = dao.salvar(aluno).intValue();
+        vinculaAlunoComTelefone(alunoId, fixo, celular);
         telefoneDAO.adiciona(fixo, celular);
         return null;
     }
 
-
     @Override
-    protected void onPostExecute(Object o) {
-        super.onPostExecute(o);
-        listener.AlunoSalvo();
+    protected void onPostExecute(Void aVoid) {
+        super.onPostExecute(aVoid);
+        listener.quandoSalvo();
     }
 
-    private void vinculaAlunoComTelefone(int idAluno, Telefone... telefones) {
+    private void vinculaAlunoComTelefone(int alunoId, Telefone... telefones) {
         for (Telefone telefone :
                 telefones) {
-            telefone.setIdAluno(idAluno);
+            telefone.setIdAluno(alunoId);
         }
-
     }
 
-    public interface SalvaAlunoListener{
-
-        void AlunoSalvo();
+    public interface QuandoAlunoSalvoListener {
+        void quandoSalvo();
     }
-
 }

@@ -118,17 +118,12 @@ public class FormularioAlunoActivity extends AppCompatActivity {
     }
 
     private void salvaAluno(Telefone fixo, Telefone celular) {
-        new SalvaAlunoTask(aluno, dao, fixo, celular, telefoneDAO, new SalvaAlunoTask.SalvaAlunoListener() {
-            @Override
-            public void AlunoSalvo() {
-                finish();
-            }
-        });
+        new SalvaAlunoTask(aluno, dao, fixo, celular, telefoneDAO, this::finish).execute();
     }
 
     private void editaAluno(Telefone fixo, Telefone celular) {
         dao.editar(aluno);
-        SalvaAlunoTask.vinculaAlunoComTelefone(aluno.getId(),fixo, celular);
+//        vinculaAlunoComTelefone(aluno.getId(),fixo, celular);
         atualizaIdsDosTelefones(fixo, celular);
         telefoneDAO.atualiza(fixo, celular);
     }

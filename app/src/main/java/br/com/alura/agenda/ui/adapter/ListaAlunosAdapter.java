@@ -65,7 +65,7 @@ public class ListaAlunosAdapter extends BaseAdapter {
                     campoTelefone.setText(telefone.getNumero());
                 }
             }
-        });
+        }).execute();
 //
     }
 

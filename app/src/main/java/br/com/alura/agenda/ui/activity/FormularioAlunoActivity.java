@@ -12,6 +12,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.util.List;
 
 import br.com.alura.agenda.R;
+import br.com.alura.agenda.asynctask.BaseAlunoTelefoneTask;
+import br.com.alura.agenda.asynctask.BuscaTodosTelefonesDoAluno;
+import br.com.alura.agenda.asynctask.EditaAlunoTask;
 import br.com.alura.agenda.asynctask.SalvaAlunoTask;
 import br.com.alura.agenda.database.AgendaDataBase;
 import br.com.alura.agenda.database.dao.AlunoDao;
@@ -19,6 +22,7 @@ import br.com.alura.agenda.database.dao.TelefoneDAO;
 import br.com.alura.agenda.model.Aluno;
 import br.com.alura.agenda.model.Telefone;
 import br.com.alura.agenda.model.TipoTelefone;
+import br.com.alura.agenda.ui.adapter.ListaAlunosAdapter;
 
 import static br.com.alura.agenda.ui.activity.ConstantesActivities.CHAVE_ALUNO;
 
@@ -44,7 +48,6 @@ public class FormularioAlunoActivity extends AppCompatActivity {
         inicializacaoDosCampos();
         carregaAlunos();
     }
-
     private void carregaAlunos() {
         Intent dados = getIntent();
 
@@ -57,40 +60,43 @@ public class FormularioAlunoActivity extends AppCompatActivity {
             aluno = new Aluno();
         }
     }
-
     private void preencheOsCampos() {
         campoNome.setText(aluno.getNome());
         campoEmail.setText(aluno.getEmail());
         preencheCamposDeTelefone();
     }
-
     private void preencheCamposDeTelefone() {
-        telefonesDoAluno = telefoneDAO.devolveTelefonesDoAluno(aluno.getId());
-        for (Telefone telefone :
-                telefonesDoAluno) {
-            if(telefone.getTipo() == TipoTelefone.FIXO){
 
-                campoTelefoneFixo.setText(telefone.getNumero());
-            }else{
+        new BuscaTodosTelefonesDoAluno(telefoneDAO, aluno, new BuscaTodosTelefonesDoAluno.BuscaTodosTelefonesListener() {
+            @Override
+            public void buscaListener(List<Telefone> telefones) {
 
-                campoTelefoneCelular.setText(telefone.getNumero());
+                telefonesDoAluno = telefones;
+                for (Telefone telefone :
+                        telefonesDoAluno) {
+                    if(telefone.getTipo() == TipoTelefone.FIXO){
+
+                        campoTelefoneFixo.setText(telefone.getNumero());
+                    }else{
+
+                        campoTelefoneCelular.setText(telefone.getNumero());
+                    }
+                }
             }
-        }
-    }
+        }).execute();
 
+    }
     private void inicializacaoDosCampos() {
         campoNome = findViewById(R.id.activity_formulario_aluno_nome);
         campoTelefoneFixo = findViewById(R.id.activity_formulario_aluno_telefone_fixo);
         campoTelefoneCelular = findViewById(R.id.activity_formulario_aluno_telefone_celular);
         campoEmail = findViewById(R.id.activity_formulario_aluno_email);
     }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.activity_formulario_aluno_menu, menu);
         return super.onCreateOptionsMenu(menu);
     }
-
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int itemId = item.getItemId();
@@ -100,7 +106,6 @@ public class FormularioAlunoActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
     private void finalizaFormulario() {
         preencheAluno();
         Telefone fixo = criaTelefone(R.id.activity_formulario_aluno_telefone_fixo, TipoTelefone.FIXO);
@@ -111,37 +116,21 @@ public class FormularioAlunoActivity extends AppCompatActivity {
             salvaAluno(fixo, celular);
         }
     }
-
     private Telefone criaTelefone(int p, TipoTelefone fixo2) {
         TextView telefoneFixo = findViewById(p);
         return new Telefone(telefoneFixo.getText().toString(), fixo2);
     }
-
     private void salvaAluno(Telefone fixo, Telefone celular) {
         new SalvaAlunoTask(aluno, dao, fixo, celular, telefoneDAO, this::finish).execute();
     }
-
     private void editaAluno(Telefone fixo, Telefone celular) {
-        dao.editar(aluno);
-//        vinculaAlunoComTelefone(aluno.getId(),fixo, celular);
-        atualizaIdsDosTelefones(fixo, celular);
-        telefoneDAO.atualiza(fixo, celular);
-    }
-
-    private void atualizaIdsDosTelefones(Telefone fixo, Telefone celular) {
-        for (Telefone telefone :
-                telefonesDoAluno) {
-            if(telefone.getTipo() == TipoTelefone.FIXO){
-
-                telefone.setId(fixo.getId());
-            }else{
-
-                telefone.setId(celular.getId());
+        new EditaAlunoTask(dao, aluno, telefoneDAO, fixo, celular, telefonesDoAluno, new BaseAlunoTelefoneTask.FinalizadaListener() {
+            @Override
+            public void quandoFinalizada() {
+                finish();
             }
-        }
+        }).execute();
     }
-
-
     private void preencheAluno() {
         aluno.setNome(campoNome.getText().toString());
         aluno.setEmail(campoEmail.getText().toString());

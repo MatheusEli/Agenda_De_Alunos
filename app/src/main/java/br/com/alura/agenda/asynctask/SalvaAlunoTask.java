@@ -1,23 +1,22 @@
 package br.com.alura.agenda.asynctask;
 
-import android.os.AsyncTask;
-
 import br.com.alura.agenda.database.dao.AlunoDao;
 import br.com.alura.agenda.database.dao.TelefoneDAO;
 import br.com.alura.agenda.model.Aluno;
 import br.com.alura.agenda.model.Telefone;
 
-public class SalvaAlunoTask extends AsyncTask<Void, Void, Void> {
+public class SalvaAlunoTask extends BaseAlunoTelefoneTask{
 
     private final Aluno aluno;
     private final AlunoDao dao;
     private final Telefone fixo;
     private final Telefone celular;
     private final TelefoneDAO telefoneDAO;
-    private final QuandoAlunoSalvoListener listener;
+    private final FinalizadaListener listener;
 
     public SalvaAlunoTask(Aluno aluno, AlunoDao dao, Telefone fixo, Telefone celular, TelefoneDAO telefoneDAO,
-                          QuandoAlunoSalvoListener listener) {
+                          FinalizadaListener listener) {
+        super(listener);
         this.aluno = aluno;
         this.dao = dao;
         this.fixo = fixo;
@@ -34,20 +33,4 @@ public class SalvaAlunoTask extends AsyncTask<Void, Void, Void> {
         return null;
     }
 
-    @Override
-    protected void onPostExecute(Void aVoid) {
-        super.onPostExecute(aVoid);
-        listener.quandoSalvo();
-    }
-
-    private void vinculaAlunoComTelefone(int alunoId, Telefone... telefones) {
-        for (Telefone telefone :
-                telefones) {
-            telefone.setIdAluno(alunoId);
-        }
-    }
-
-    public interface QuandoAlunoSalvoListener {
-        void quandoSalvo();
-    }
 }
